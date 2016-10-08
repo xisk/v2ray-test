@@ -2,7 +2,6 @@
 本项目的脚本可以自动修改 V2Ray KCP 配置（仅 tti 和 uplinkCap）并进行测速，以选出更好的配置参数，省去手动测试的烦琐。
 
 脚本在 Debian 8 测试通过，使用前请阅读以下说明：
-
 - V2Ray 两端须配置好 mKCP 能够正常使用 mKCP 代理
 - 脚本需要自动修改服务器配置、获取服务器网卡流量信息、重启 V2Ray 等，因此
   - 脚本使用无口令的 SSH 密钥登录，如对安全有顾虑请修改脚本使用带口令密钥或其它方式登录
@@ -28,4 +27,11 @@
 3. 生成配置好 SSH 密钥
 4. 将 autokcpserver.sh 下载至要测试服务器， autokcpclient.sh 下载至PC（Linux）
 5. 修改好相关参数，运行 autokcpclient.sh
+
+
+测试结果中，serverRx 为服务下载文件所花的流量，serverTx 服务器发送给客户端花费的流量。
+
+测试结果示例：
+
+![example](example.png)
 
