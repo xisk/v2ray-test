@@ -7,12 +7,12 @@ UPLINKCAPINIT=1
 MAXTTI=21
 MAXUPLINK=3
 
-echo -n "Testing ..."
+echo -n "Testing..."
 ssh -p $PORT -t root@$IP "echo "tti:upLink:serverRx:serverTx">serverresult.txt" 2>/dev/null
 echo "filezise:speed">clinetresult.txt
 for (( TTI = $TTIINIT; TTI <= $MAXTTI; TTI++ )); do
   for (( UPLINKCAP = $UPLINKCAPINIT; UPLINKCAP <= $MAXUPLINK; UPLINKCAP++ )); do
-    ssh -p $PORT -t root@$IP "bash autokcpserver.sh ${TTI} ${UPLINKCAP}"
+    ssh -p $PORT -t root@$IP "bash autokcpserver.sh ${TTI} ${UPLINKCAP}" 2>/dev/null
     proxychains wget -background http://www.dvlnx.com/software/gnu/denemo/denemo-2.0.8.tar.gz >/dev/null #16MB
     #proxychains wget -background http://www.dvlnx.com/software/gnu/gawk/gawk-3.0.6.tar.gz >/dev/null  #1MB
     SPEED=`grep B/s ckground`
@@ -27,7 +27,7 @@ for (( TTI = $TTIINIT; TTI <= $MAXTTI; TTI++ )); do
     rm ckground
     percent=$[$[$[$[$[TTI-TTIINIT] * $[MAXUPLINK - UPLINKCAPINIT + 1]] + $[UPLINKCAP - UPLINKCAPINIT + 1]] * 100] \
         / $[$[MAXTTI - TTIINIT + 1] * $[MAXUPLINK - UPLINKCAPINIT + 1]]]
-    echo -en "\\033[25G $[percent - 1] % completed"
+    echo -en "\\033[15G $[percent - 1] % completed"
   done
 done
 
