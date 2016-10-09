@@ -33,7 +33,6 @@ done
 
 ssh -p $PORT -t root@$IP "bash autokcpserver.sh $[TTI-1] $[UPLINKCAP-1]" 2>/dev/null #get the last data
 scp -P $PORT root@$IP:~/serverresult.txt ./serverresult.txt >/dev/null
-cp serverresult.txt serverresult.txt.bak
 LINE=`wc -l serverresult.txt | cut -d ' ' -f 1`
 echo "tti:uplinkCap:serverRx:serverTx:filezise:speed" > result.txt
 for (( i = 2; i < $LINE; i++ )); do
