@@ -7,8 +7,8 @@ UPLINKCAPINIT=1
 MAXTTI=21
 MAXUPLINK=3
 
-
-ssh -p $PORT -t root@$IP "echo "tti:upLink:serverRx:serverTx">serverresult.txt"
+echo -n "Testing ..."
+ssh -p $PORT -t root@$IP "echo "tti:upLink:serverRx:serverTx">serverresult.txt" 2>/dev/null
 echo "filezise:speed">clinetresult.txt
 for (( TTI = $TTIINIT; TTI <= $MAXTTI; TTI++ )); do
   for (( UPLINKCAP = $UPLINKCAPINIT; UPLINKCAP <= $MAXUPLINK; UPLINKCAP++ )); do
@@ -25,10 +25,13 @@ for (( TTI = $TTIINIT; TTI <= $MAXTTI; TTI++ )); do
     rm denemo-2.0.8.tar.gz
     #rm gawk-3.0.6.tar.gz
     rm ckground
+    percent=$[$[$[$[$[TTI-TTIINIT] * $[MAXUPLINK - UPLINKCAPINIT + 1]] + $[UPLINKCAP - UPLINKCAPINIT + 1]] * 100] \
+        / $[$[MAXTTI - TTIINIT + 1] * $[MAXUPLINK - UPLINKCAPINIT + 1]]]
+    echo -en "\\033[25G $[percent - 1] % completed"
   done
 done
 
-ssh -p $PORT -t root@$IP "bash autokcpserver.sh $[TTI-1] $[UPLINKCAP-1]" #get the last data
+ssh -p $PORT -t root@$IP "bash autokcpserver.sh $[TTI-1] $[UPLINKCAP-1]" 2>/dev/null #get the last data
 scp -P $PORT root@$IP:~/serverresult.txt ./serverresult.txt >/dev/null
 cp serverresult.txt serverresult.txt.bak
 LINE=`wc -l serverresult.txt | cut -d ' ' -f 1`
@@ -51,7 +54,7 @@ done
 rm serverresult.txt clinetresult.txt
 sed -i "s/ //g" result.txt
 sed -i "s/:/ /g" result.txt
-echo "The test is completed."
+echo -e "\nThe test is completed."
 printf '%5s %10s %10s %10s %10s %12s \n' $(cat result.txt)
 RESPATH=`pwd`
 echo "Test result is saved to ${RESPATH}/result.txt"
