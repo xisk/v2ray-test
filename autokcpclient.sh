@@ -25,8 +25,8 @@ for (( TTI = $TTIINIT; TTI <= $MAXTTI; TTI++ )); do
     rm denemo-2.0.8.tar.gz
     #rm gawk-3.0.6.tar.gz
     rm ckground
-    percent=$[$[$[$[$[TTI-TTIINIT] * $[MAXUPLINK - UPLINKCAPINIT + 1]] + $[UPLINKCAP - UPLINKCAPINIT + 1]] * 100] \
-        / $[$[MAXTTI - TTIINIT + 1] * $[MAXUPLINK - UPLINKCAPINIT + 1]]]
+    percent=$[((TTI-TTIINIT)*(MAXUPLINK - UPLINKCAPINIT + 1)+ UPLINKCAP - UPLINKCAPINIT +1) * 100 \
+    / ((MAXTTI - TTIINIT+1)*(MAXUPLINK- UPLINKCAPINIT + 1))]
     echo -en "\\033[15G $[percent - 1] % completed"
   done
 done
