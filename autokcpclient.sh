@@ -9,7 +9,7 @@ IP=`jq .outbound.settings.vnext[0].address /etc/v2ray/config.json|sed "s/\"//g"`
 PROXY=`jq .inbound.protocol /etc/v2ray/config.json|sed "s/\"//g"`
 PROXYPORT=`jq .inbound.port /etc/v2ray/config.json`
 PROXY=$PROXY://127.0.0.1:$PROXYPORT
-DOWNLOAD_LINK="http://www.dvlnx.com/software/gnu/gawk/gawk-3.0.6.tar.gz"
+DOWNLOAD_LINK="http://www.dvlnx.com/software/gnu/denemo/denemo-2.0.8.tar.gz"
 
 # configure ssh connection reusing
 SSHCONFIG="${HOME}/.ssh/config"
